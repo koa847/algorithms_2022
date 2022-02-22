@@ -9,8 +9,11 @@
 Обязательно напишите третью версию (здесь возможно даже решение одной строкой).
 Сделайте замеры и опишите, получилось ли у вас ускорить задачу
 """
+from timeit import timeit
+from statistics import mode
 
-array = [1, 3, 1, 3, 4, 5, 1]
+
+array = [1, 3, 1, 3, 4, 5, 1, 3, 6, 3]
 
 
 def func_1():
@@ -36,6 +39,25 @@ def func_2():
     return f'Чаще всего встречается число {elem}, ' \
            f'оно появилось в массиве {max_2} раз(а)'
 
+def func_3():
+    elem = max(array, key=array.count)
+    return f'Чаще всего встречается число {elem}, ' \
+           f'оно появилось в массиве {array.count(elem)} раз(а)'
+
+def func_4():
+    return f'Чаще всего встречается число {mode(array)} '\
+           f'оно появилось в массиве {array.count(mode(array))} раз(а)'
+
 
 print(func_1())
 print(func_2())
+print(func_3())
+print(func_4())
+
+for i in range(1, 5):
+    s = f'func_{i}'
+    st = f'{s}()'
+    t = timeit (st, globals=globals(), number=1000)
+    print(f'Время выполнения программы {s} составляет {t} секунд')
+
+#Для данной задачи лучше всего подходит встроеная фунция max(), она быстрее всего и очень компактная и экономна к написаню кода
